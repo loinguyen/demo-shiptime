@@ -1,0 +1,21 @@
+export const data = [
+    { value:"FRONTDOOR", name:"Front Door"},
+    {value:"OFFICE", name:"Office"},
+    {value:"LOBBY", name:"Lobby"},
+    {value:"MAILROOM", name:"Mail Room"},
+    {value:"MAILBOX", name:"Mailbox"},
+    {value:"PARTSDEPARTMENT", name:"Parts Department"},
+    {value:"PHARMACY", name:"Pharmacy"},
+    {value:"RECEIVING", name:"Receiving"},
+    {value:"RECEPTION", name:"Reception"},
+    {value:"SERVICECOUNTER", name:"Service Counter"},
+    {value:"SIDEDOOR", name:"Side Door"},
+    {value:"BACKDOOR", name:"Back Door"},
+    {value:"BASEMENT", name:"Basement"},
+    {value:"GARAGE", name:"Garage"},
+    {value:"SHIPPING", name:"Shipping"},
+    {value:"KIOSK", name:"Kiosk"},
+    {value:"LOADINGDOCK", name:"Loading Dock"},
+    {value:"WAREHOUSE", name:"Warehouse"},
+    {value:"OTHER", name:"Other"}
+]
