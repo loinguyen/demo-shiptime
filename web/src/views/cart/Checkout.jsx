@@ -126,7 +126,8 @@ const CheckoutView = (props) => {
       if (error.message === "Failed to fetch") {
         openNotification(["There are unexpected error occuring, Please try again later"]);
       } else {
-        openNotification(error.messages);
+        const messageList = error.message.split(',');
+        openNotification(messageList);
       }
     } finally {
       setLoading(false);
@@ -161,7 +162,8 @@ const CheckoutView = (props) => {
       if (error.message === "Failed to fetch") {
         openNotification(["There are unexpected error occuring, Please try again later"]);
       } else {
-        openNotification(error.messages);
+        const messageList = error.message.split(',');
+        openNotification(messageList);
       }
     } finally {
       setLoading(false);
