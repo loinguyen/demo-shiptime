@@ -70,12 +70,36 @@ const CheckoutView = (props) => {
   const nextToCarrier = () => {
     childState.packageState = packRef.current.state;
     setChildState(childState);
+    const errorList = validatePackageData();
+    if (errorList.length > 0) {
+      openNotification(errorList)
+      return;
+    }
     getRateService(nextStep);
   };
 
   const prev = () => {
     setCurrent(current - 1);
   };
+
+  const validatePackageData = () => {
+    const errorList = [];
+    const packageData = childState.packageState;
+    if (packageData.height === '' || packageData.height < 0) {
+      errorList.push("Package Height must be greater than 0")
+    }
+    if (packageData.length === '' || packageData.length < 0) {
+      errorList.push("Package Length must be greater than 0")
+    }
+    if (packageData.width === '' || packageData.width < 0) {
+      errorList.push("Package Width must be greater than 0")
+    }
+    if (packageData.weight === '' || packageData.weight < 0) {
+      errorList.push("Package Weight must be greater than 0")
+    }
+
+    return errorList;
+  }
 
   const getRateService = async (nextAction) => {
     setLoading(true);
