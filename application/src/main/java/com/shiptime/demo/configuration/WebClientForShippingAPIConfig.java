@@ -44,8 +44,6 @@ public class WebClientForShippingAPIConfig {
 
     @Bean
     public WebClient webClientForShippingAPI(WebClient.Builder builder) {
-        String username = "loi.nguyen.01835@gmail.com";
-        String password = "Password123";
 
         return builder
                 .baseUrl("https://restapi.appspaces.ca/rest")
