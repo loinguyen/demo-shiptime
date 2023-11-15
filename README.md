@@ -8,6 +8,7 @@
 
 
 **Install and run backend server:**
+
 **Step 1**: Update configration
 open file ./src/main/resources/application.properties in any text editor
 update the following properties:
