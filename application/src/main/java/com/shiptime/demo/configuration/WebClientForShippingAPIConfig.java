@@ -10,6 +10,7 @@ import reactor.netty.http.client.HttpClient;
 import reactor.netty.transport.logging.AdvancedByteBufFormat;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.Base64;
 
 @Configuration
@@ -27,7 +28,7 @@ public class WebClientForShippingAPIConfig {
             .followRedirect((req, res) -> {
                 // This condition ensures we are only following redirects from the same host
                 return req.resourceUrl().equals(res.responseHeaders().get("Location"));
-            })
+            }).responseTimeout(Duration.ofSeconds(50))
             .doOnRequest((req, connection) -> {
                 req.requestHeaders().add("Authorization", "Basic " + encodedCredentials);
             })

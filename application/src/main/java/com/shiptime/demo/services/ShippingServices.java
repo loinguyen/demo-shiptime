@@ -10,8 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +38,15 @@ public class ShippingServices {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body( Mono.just(request), RateRequest.class)
                 .retrieve()
-                .bodyToMono(RateResponse.class);
+                .bodyToMono(RateResponse.class)
+                .retryWhen(Retry.backoff(3, Duration.ofSeconds(1))
+                        .filter(throwable -> {
+                            if (throwable instanceof WebClientResponseException) {
+                                WebClientResponseException responseException = (WebClientResponseException) throwable;
+                                return responseException.getRawStatusCode() == 500;
+                            }
+                            return false;
+                        }));
     }
 
     public Mono<ShipResponse> postShipments(ShipRequest request) {
@@ -58,6 +69,14 @@ public class ShippingServices {
                 .accept(MediaType.APPLICATION_PDF)
                 .retrieve()
                 .bodyToMono(byte[].class)
+                .retryWhen(Retry.backoff(3, Duration.ofSeconds(1))
+                        .filter(throwable -> {
+                            if (throwable instanceof WebClientResponseException) {
+                                WebClientResponseException responseException = (WebClientResponseException) throwable;
+                                return responseException.getRawStatusCode() == 500;
+                            }
+                            return false;
+                        }))
                 .doOnError(exception -> {
                     logger.warn("Failed to send notification to {}, cause {}", "/rates", exception.getMessage());
                 });
